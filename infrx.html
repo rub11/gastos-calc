@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Gastos Mensais</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #111;
+      font-family: 'Segoe UI', sans-serif;
+      color: #FFD700;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1c1c1c;
+      color: #FFD700;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #FFD70044;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #222;
+    }
+
+    input[type="text"], input[type="number"] {
+      background-color: #333;
+      border: 1px solid #FFD70044;
+      color: #FFD700;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .btn {
+      background-color: #FFD700;
+      color: #111;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #e6c200;
+    }
+
+    #chartContainer {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #FFD70044;
+    }
+
+    #printBtn {
+      margin-top: 20px;
+      background-color: transparent;
+      border: 2px solid #FFD700;
+      color: #FFD700;
+    }
+
+    #printBtn:hover {
+      background-color: #FFD70022;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>🧮 Calculadora de Gastos Mensais</h1>
+
+  <table id="gastosTable">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Valor (R$)</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr>
+        <td><input type="text" placeholder="Nome do gasto" /></td>
+        <td><input type="number" placeholder="0.00" oninput="atualizarTotal()" /></td>
+        <td><button class="btn" onclick="removerLinha(this)">X</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="adicionarLinha()">➕ Adicionar Gasto</button>
+
+  <h2>Total: R$ <span id="total">0.00</span></h2>
+  <h3 id="dica">💡 Dica: insira os valores para ver sugestões.</h3>
+
+  <button class="btn" id="printBtn" onclick="window.print()">🖨️ Salvar / Imprimir</button>
+
+  <div id="chartContainer">
+    <canvas id="graficoPizza"></canvas>
+  </div>
+
+  <script>
+    const tableBody = document.getElementById("tableBody");
+    const totalSpan = document.getElementById("total");
+    const dicaSpan = document.getElementById("dica");
+
+    const chartCanvas = document.getElementById("graficoPizza");
+    let chart;
+
+    function adicionarLinha() {
+      const novaLinha = document.createElement("tr");
+      novaLinha.innerHTML = `
+        <td><input type="text" placeholder="Nome do gasto" /></td>
+        <td><input type="number" placeholder="0.00" oninput="atualizarTotal()" /></td>
+        <td><button class="btn" onclick="removerLinha(this)">X</button></td>
+      `;
+      tableBody.appendChild(novaLinha);
+    }
+
+    function removerLinha(botao) {
+      const linha = botao.parentElement.parentElement;
+      linha.remove();
+      atualizarTotal();
+    }
+
+    function atualizarTotal() {
+      let total = 0;
+      const valores = [];
+      const labels = [];
+
+      document.querySelectorAll("#tableBody tr").forEach((linha) => {
+        const nome = linha.querySelector("input[type='text']").value || "Sem nome";
+        const valor = parseFloat(linha.querySelector("input[type='number']").value) || 0;
+
+        total += valor;
+        if (valor > 0) {
+          valores.push(valor);
+          labels.push(nome);
+        }
+      });
+
+      totalSpan.textContent = total.toFixed(2);
+      atualizarDica(total);
+      atualizarGrafico(labels, valores);
+    }
+
+    function atualizarDica(total) {
+      if (total <= 500) {
+        dicaSpan.textContent = "🔍 Dica: Seus gastos estão sob controle!";
+      } else if (total <= 1500) {
+        dicaSpan.textContent = "⚠️ Dica: Atenção! Reveja alguns gastos.";
+      } else {
+        dicaSpan.textContent = "🚨 Dica: Muito alto! É hora de economizar.";
+      }
+    }
+
+    function atualizarGrafico(labels, data) {
+      if (chart) chart.destroy();
+      chart = new Chart(chartCanvas, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Distribuição de Gastos',
+            data: data,
+            backgroundColor: [
+              '#FFD700',
+              '#FF6347',
+              '#40E0D0',
+              '#8A2BE2',
+              '#00FF7F',
+              '#FFA07A',
+              '#FF4500',
+              '#20B2AA',
+              '#9370DB',
+              '#B22222'
+            ],
+            borderColor: '#111',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              labels: {
+                color: '#FFD700'
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
