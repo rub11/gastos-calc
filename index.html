@@ -6,17 +6,22 @@
   <title>Calculadora de Gastos Mensais</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       background-color: #111;
       font-family: 'Segoe UI', sans-serif;
       color: #FFD700;
-      padding: 30px;
+      padding: 20px;
+      margin: 0;
     }
 
     h1 {
       text-align: center;
       font-size: 2.5rem;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     table {
@@ -25,11 +30,12 @@
       background-color: #1c1c1c;
       color: #FFD700;
       margin-bottom: 20px;
+      word-break: break-word;
     }
 
     th, td {
       border: 1px solid #FFD70044;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
     }
 
@@ -43,6 +49,7 @@
       color: #FFD700;
       padding: 8px;
       border-radius: 6px;
+      width: 90%;
     }
 
     .btn {
@@ -61,15 +68,6 @@
       background-color: #e6c200;
     }
 
-    #chartContainer {
-      max-width: 600px;
-      margin: 40px auto;
-      background: #1c1c1c;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px #FFD70044;
-    }
-
     #printBtn {
       margin-top: 20px;
       background-color: transparent;
@@ -81,6 +79,48 @@
       background-color: #FFD70022;
     }
 
+    #chartContainer {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #FFD70044;
+    }
+
+    h2, h3 {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+
+      input[type="text"], input[type="number"] {
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      #chartContainer {
+        width: 100%;
+        padding: 15px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -103,12 +143,12 @@
     </tbody>
   </table>
 
-  <button class="btn" onclick="adicionarLinha()">➕ Adicionar Gasto</button>
-
-  <h2>Total: R$ <span id="total">0.00</span></h2>
-  <h3 id="dica">💡 Dica: insira os valores para ver sugestões.</h3>
-
-  <button class="btn" id="printBtn" onclick="window.print()">🖨️ Salvar / Imprimir</button>
+  <div class="center">
+    <button class="btn" onclick="adicionarLinha()">➕ Adicionar Gasto</button>
+    <h2>Total: R$ <span id="total">0.00</span></h2>
+    <h3 id="dica">💡 Dica: insira os valores para ver sugestões.</h3>
+    <button class="btn" id="printBtn" onclick="window.print()">🖨️ Salvar / Imprimir</button>
+  </div>
 
   <div id="chartContainer">
     <canvas id="graficoPizza"></canvas>
