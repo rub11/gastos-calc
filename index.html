@@ -11,9 +11,9 @@
     }
 
     body {
-      background-color: #111;
+      background-color: #fff; /* Fundo branco */
       font-family: 'Segoe UI', sans-serif;
-      color: #FFD700;
+      color: #000; /* Letra preta */
       padding: 20px;
       margin: 0;
     }
@@ -22,39 +22,40 @@
       text-align: center;
       font-size: 2.5rem;
       margin-bottom: 20px;
+      color: #000; /* Letra preta */
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background-color: #1c1c1c;
-      color: #FFD700;
+      background-color: #f8f8f8; /* Cor de fundo mais clara para a tabela */
+      color: #000; /* Letra preta */
       margin-bottom: 20px;
       word-break: break-word;
     }
 
     th, td {
-      border: 1px solid #FFD70044;
+      border: 1px solid #000; /* Bordas pretas */
       padding: 10px;
       text-align: center;
     }
 
     th {
-      background-color: #222;
+      background-color: #e0e0e0; /* Cor mais clara para os cabeçalhos */
     }
 
     input[type="text"], input[type="number"] {
-      background-color: #333;
-      border: 1px solid #FFD70044;
-      color: #FFD700;
+      background-color: #fff; /* Fundo branco para os inputs */
+      border: 1px solid #000; /* Borda preta */
+      color: #000; /* Letra preta */
       padding: 8px;
       border-radius: 6px;
       width: 90%;
     }
 
     .btn {
-      background-color: #FFD700;
-      color: #111;
+      background-color: #000; /* Fundo preto */
+      color: #fff; /* Letra branca */
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
@@ -65,32 +66,33 @@
     }
 
     .btn:hover {
-      background-color: #e6c200;
+      background-color: #d70e0e; /* Efeito de hover mais escuro */
     }
 
     #printBtn {
       margin-top: 20px;
       background-color: transparent;
-      border: 2px solid #FFD700;
-      color: #FFD700;
+      border: 2px solid #000; /* Borda preta */
+      color: #000; /* Letra preta */
     }
 
     #printBtn:hover {
-      background-color: #FFD70022;
+      background-color: #be0b0b; /* Efeito de hover mais escuro */
     }
 
     #chartContainer {
       max-width: 600px;
       margin: 40px auto;
-      background: #1c1c1c;
+      background: #f8f8f8; /* Fundo mais claro para o gráfico */
       padding: 20px;
       border-radius: 16px;
-      box-shadow: 0 0 20px #FFD70044;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra suave */
     }
 
     h2, h3 {
       text-align: center;
       margin: 15px 0;
+      color: #000; /* Letra preta */
     }
 
     .center {
@@ -153,9 +155,7 @@
   <div id="chartContainer">
     <canvas id="graficoPizza"></canvas>
   </div>
-  <div>
-    <h1><a style="color: #FFD700; text-decoration: none; padding-bottom:130px;" href="VARIAÇÃO DE COR DE TABELA/vermelho.html">CLIQUE AQUI PARA USAR A TABELA NA COR VERMELHA ( MELHOR PARA IMPRESSÃO )</a></h1>
-  </div>
+  
 
   <script>
     const tableBody = document.getElementById("tableBody");
@@ -233,7 +233,7 @@
               '#9370DB',
               '#B22222'
             ],
-            borderColor: '#111',
+            borderColor: '#000',
             borderWidth: 2
           }]
         },
@@ -241,7 +241,7 @@
           plugins: {
             legend: {
               labels: {
-                color: '#FFD700'
+                color: '#000'
               }
             }
           }
